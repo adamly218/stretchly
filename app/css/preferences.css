@@ -232,11 +232,6 @@ body[dir=rtl] .appearance > input[type="radio"] + label:before {
 
 .win32 .appearance > input[type="radio"] + label:before {
   content: "\2713";
-  font: 13px sans-serif;
-}
-
-.darwin .appearance > input[type="radio"] + label:before {
-  font: 13px sans-serif;
 }
 
 #greenClouds + label:before {
@@ -266,7 +261,7 @@ body[dir=rtl] .appearance > input[type="radio"] + label:before {
 
 #snowWhite + label:before {
   background: #ffffff;
-  color: #000000;
+  color: #ffffff;
 }
 
 .appearance > #greenClouds:checked + label:before,
