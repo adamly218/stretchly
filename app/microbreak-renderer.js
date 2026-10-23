@@ -104,6 +104,7 @@ window.onload = async (event) => {
           closeElement.classList.add('hidden')
         }
         progress.value = (100 - passedPercent) * progress.max / 100
+        document.body.style.setProperty('--remaining', progress.value / progress.max)
         if (secondChanged) {
           progressTime.innerHTML = await window.utils.formatTimeRemaining(duration - passed, locale)
         }
@@ -119,6 +120,7 @@ window.onload = async (event) => {
     if (which !== 'microbreak' || manualAwaiting) return
     manualAwaiting = true
     progress.value = 0
+    document.body.style.setProperty('--remaining', progress.value / progress.max)
     progressTime.classList.remove('hidden')
     postponeElement.classList.add('hidden')
     closeElement.classList.add('hidden')

@@ -1389,6 +1389,9 @@ function createPreferencesWindow () {
     .workAreaSize.height * 0.9
   preferencesWin = new BrowserWindow({
     autoHideMenuBar: true,
+    minimizable: false,
+    maximizable: false,
+    fullscreenable: false,
     show: false,
     backgroundThrottling: false,
     icon: windowIconPath(),
@@ -1397,7 +1400,7 @@ function createPreferencesWindow () {
     maxHeight: Math.round(maxHeight),
     x: displayManager.getDisplayX(-1, 600),
     y: displayManager.getDisplayY(-1, 530),
-    backgroundColor: '#EDEDED',
+    backgroundColor: nativeTheme.shouldUseDarkColors ? '#1E1E1E' : '#ECECEC',
     webPreferences: {
       preload: join(__dirname, './preferences-preload.mjs'),
       sandbox: false

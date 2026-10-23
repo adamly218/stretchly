@@ -13,7 +13,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `currentTimeInBreaksFontSize` advanced preference to change the clock's font size in breaks
 - CLI command and shortcut to start the last break again
 
+### Changed
+- refreshed design closer to native macOS: system font, modern controls, translucent Preferences toolbar
+- breaks show a countdown ring with a slow breathing glow and glass-style buttons
+- dark text on the light Coffee Kisses break colour for readable contrast
+- Preferences window no longer offers minimize or zoom
+
 ### Fixed
+- checkboxes, radio buttons and break buttons can be used with the keyboard and show a focus ring
 - fix debug file and folder links when paths contain HTML special characters
 - fix custom break images when the user data path contains URL special characters
 - fix snap startup crash

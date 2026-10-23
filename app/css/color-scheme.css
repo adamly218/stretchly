@@ -1,27 +1,54 @@
+/*
+  Colour tokens modelled on macOS dynamic system colours.
+  Contrast (WCAG) of text tokens is noted against --main-bg-color.
+*/
+:root {
+  --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI',
+    'Noto Sans Regular', 'Noto Sans Arabic Regular', 'Noto Sans CJK KR Regular',
+    'Noto Sans Devanagari Regular', 'Noto Sans Gujarati Regular', 'Noto Sans Gurmukhi Regular',
+    'Noto Sans Hebrew Regular', 'Noto Sans JP Regular', sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI Variable Display', 'Segoe UI',
+    'Noto Sans Regular', 'Noto Sans Arabic Regular', 'Noto Sans CJK KR Regular',
+    'Noto Sans Devanagari Regular', 'Noto Sans Gujarati Regular', 'Noto Sans Gurmukhi Regular',
+    'Noto Sans Hebrew Regular', 'Noto Sans JP Regular', sans-serif;
+
+  /* filled accent: white text on it is 5.26:1 */
+  --accent: #0068DA;
+  --accent-text: #FFFFFF;
+  --focus-ring: rgba(0, 104, 218, 0.5);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
-    --main-color: #252525;
-    --main-bg-color: #EDEDED;
-    --nav-bg:  linear-gradient(180deg, #EDECED 1%, #D2D1D2 97%);
-    --nav-shadow: inset 0 0 0 0 rgba(255,255,255,0.50), inset 0 0 0 0 #B7B4B7, inset 0 -1px 0 0 rgba(183,180,183,0.30);
+    --main-color: #262626; /* 12.8:1 */
+    --secondary-color: #6B6B6B; /* 4.5:1 */
+    --link-color: #0064D2; /* 4.7:1 */
+    --main-bg-color: #ECECEC;
+    --group-bg-color: rgba(255, 255, 255, 0.55);
 
-    --hr-bg-color: #DBDBDB;
+    --nav-bg: rgba(236, 236, 236, 0.78);
+    --nav-border: rgba(0, 0, 0, 0.1);
+    --nav-active-bg: rgba(0, 0, 0, 0.07);
+    --box-shadow: none;
+
+    --hr-bg-color: rgba(0, 0, 0, 0.1);
 
     --button-bg-color: #FFFFFF;
-    --button-color: rgba(0,0,0,0.85);
-    --button-shadow: 0 0 1px 0 rgba(0,0,0,0.20);
-    --button-push-bg: linear-gradient(180deg, #6CB3FA 0%, #067DFF 100%);
-    --button-push-shadow: 0 0 0 0 rgba(0,0,0,0.15);
+    --button-active-bg-color: #E2E2E2;
+    --button-color: #262626;
+    --button-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 0.5px 1.5px rgba(0, 0, 0, 0.18);
+    --button-push-bg: var(--accent);
+    --button-push-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1), 0 0.5px 1.5px rgba(0, 0, 0, 0.2);
 
     --checkbox-bg: #FFFFFF;
-    --checkbox-shadow: inset 0 0 1px 0 rgba(0,0,0,0.38);
-    --checkbox-checked-bg: #3B99FC;
+    --checkbox-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.3), 0 0.5px 1px rgba(0, 0, 0, 0.12);
+    --checkbox-checked-bg: var(--accent);
 
-    --has-select-before-bg: linear-gradient(180deg, #6CB3FA 0%, #057EFF 100%);
+    --has-select-before-bg: var(--accent);
     --select-bg: #FFFFFF;
-    --select-color: #252525;
-    --select-border:0 solid rgba(0,0,0,0.15);
-    --select-shadow:  0 0 1px 0 rgba(0,0,0,0.20);
+    --select-color: #262626;
+    --select-border: 0 solid transparent;
+    --select-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 0.5px 1.5px rgba(0, 0, 0, 0.18);
     --select-option-bg: #FFFFFF;
 
     --appearance-border-color: #FFFFFF;
@@ -30,30 +57,47 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --main-color: rgba(255,255,255,0.85);
-    --main-bg-color: #2D2D2D;
-    --nav-bg: linear-gradient(180deg, #4B4B4B 1%, #3D3D3D 97%);
-    --nav-shadow: inset 0 0 0 0 #000000, inset 0 -1px 0 0 #2B2B2B, inset 0 0 0 0 rgba(255,255,255,0.10);
+    --main-color: #DFDFDF; /* 12.5:1 */
+    --secondary-color: #98989D; /* 5.8:1 */
+    --link-color: #5AA9FF; /* 7.1:1 */
+    --main-bg-color: #1E1E1E;
+    --group-bg-color: rgba(255, 255, 255, 0.04);
 
-    --hr-bg-color: #535353;
+    --nav-bg: rgba(40, 40, 40, 0.78);
+    --nav-border: rgba(0, 0, 0, 0.6);
+    --nav-active-bg: rgba(255, 255, 255, 0.1);
+    --box-shadow: none;
 
-    --button-bg-color: rgba(255,255,255,0.25);
-    --button-color: rgba(255,255,255,0.85);;
-    --button-shadow: 0 0 1px 0 rgba(0,0,0,0.20), inset 0 1px 0 0 rgba(255,255,255,0.04), inset 0 0 0 0 rgba(255,255,255,0.16);
-    --button-push-bg: linear-gradient(180deg, #1768E5 0%, #145CCC 100%);
-    --button-push-shadow: 0 0 1px 0 rgba(0,0,0,0.40), 0 0 1px 0 rgba(0,0,0,0.20), inset 0 0 0 0 rgba(255,255,255,0.25), inset 0 1px 0 0 rgba(255,255,255,0.06);
+    --hr-bg-color: rgba(255, 255, 255, 0.1);
 
-    --checkbox-bg: linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.28) 100%);
-    --checkbox-shadow: 0 0 1px 0 rgba(0,0,0,0.40), 0 0 1px 0 rgba(0,0,0,0.20), inset 0 0 0 0 rgba(255,255,255,0.25), inset 0 1px 0 0 rgba(255,255,255,0.06);
-    --checkbox-checked-bg:  linear-gradient(180deg, #1768E5 0%, #145CCC 100%);
+    --button-bg-color: rgba(255, 255, 255, 0.14);
+    --button-active-bg-color: rgba(255, 255, 255, 0.24);
+    --button-color: #DFDFDF;
+    --button-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.35), inset 0 0.5px 0 rgba(255, 255, 255, 0.08);
+    --button-push-bg: var(--accent);
+    --button-push-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.35), inset 0 0.5px 0 rgba(255, 255, 255, 0.15);
 
-    --has-select-before-bg:  linear-gradient(180deg, #1768E5 0%, #145CCC 100%);
-    --select-bg: rgba(255,255,255,0.25);
-    --select-color: rgba(255,255,255,0.85);
-    --select-border: 0 solid rgba(0,0,0,0.35);
-    --select-shadow: 0 0 1px 0 rgba(0,0,0,0.20), inset 0 1px 0 0 rgba(255,255,255,0.04), inset 0 0 0 0 rgba(255,255,255,0.16);
-    --select-option-bg: #616161;
+    --checkbox-bg: rgba(255, 255, 255, 0.12);
+    --checkbox-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.18), 0 0.5px 1px rgba(0, 0, 0, 0.4);
+    --checkbox-checked-bg: var(--accent);
+
+    --has-select-before-bg: var(--accent);
+    --select-bg: rgba(255, 255, 255, 0.14);
+    --select-color: #DFDFDF;
+    --select-border: 0 solid transparent;
+    --select-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.35), inset 0 0.5px 0 rgba(255, 255, 255, 0.08);
+    --select-option-bg: #3A3A3A;
 
     --appearance-border-color: #3A3A3A;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --checkbox-shadow: inset 0 0 0 1px currentColor;
+    --button-shadow: 0 0 0 1px currentColor;
+    --select-shadow: 0 0 0 1px currentColor;
+    --hr-bg-color: currentColor;
+    --nav-border: currentColor;
   }
 }

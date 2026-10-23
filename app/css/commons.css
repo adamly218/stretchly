@@ -143,14 +143,10 @@
 }
 
 body {
+  -webkit-font-smoothing: antialiased;
   background: var(--main-bg-color);
   color: var(--main-color);
-  font-family: 'Noto Sans Regular', 'Noto Sans Arabic Regular',
-    'Noto Sans CJK KR Regular',
-    'Noto Sans Devanagari Regular',
-    'Noto Sans Gujarati Regular', 'Noto Sans Gurmukhi Regular',
-    'Noto Sans Hebrew Regular',
-    'Noto Sans JP Regular';
+  font-family: var(--font-system);
 }
 
 .darwin .darwin-hidden,
@@ -170,7 +166,12 @@ a {
   cursor: pointer;
 }
 
-/* https://css-tricks.com/html5-progress-element/ */
+:focus-visible {
+  border-radius: 5px;
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
 progress {
   appearance: none;
   -webkit-appearance: none;
@@ -179,131 +180,111 @@ progress {
 }
 
 progress[value]::-webkit-progress-bar {
-  background: transparent;
-  border: 0.5px solid #bcbcbc;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
 }
 
 progress[value]::-webkit-progress-value {
-  background-color: #cecece;
+  background-color: currentColor;
   border-radius: 3px;
 }
 
-/* https://www.codexworld.com/create-simple-css-tooltip/ */
 .tooltip {
   display: inline-block;
   position: relative;
 }
 
 .tooltip .tiptext {
-  background-color: black;
-  border-radius: 3px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  color: #fff;
-  padding: 6px 4px;
+  backdrop-filter: blur(20px) saturate(1.6);
+  background-color: rgba(30, 30, 30, 0.82);
+  border-radius: 6px;
+  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.15), 0 4px 12px rgba(0, 0, 0, 0.25);
+  color: #FFFFFF;
+  font-size: 11px;
+  line-height: 14px;
+  padding: 4px 8px;
   position: absolute;
   text-align: center;
   visibility: hidden;
+  white-space: nowrap;
   z-index: 1;
 }
 
-.tooltip .tiptext::after {
-  border-style: solid;
-  border-width: 5px;
-  content: "";
-  position: absolute;
-}
-
-.tooltip:hover .tiptext {
+.tooltip:hover .tiptext,
+.tooltip:focus-visible .tiptext {
   visibility: visible;
 }
 
-.tooltip.top .tiptext{
-  bottom: 150%;
+.tooltip.top .tiptext {
+  bottom: calc(100% + 10px);
   left: 50%;
-  margin-left: -60px;
+  transform: translateX(-50%);
 }
 
-.tooltip.top .tiptext::after{
-  border-color: #2E2E2E transparent transparent transparent;
-  left: 50%;
-  margin-left: -5px;
-  top: 100%;
-}
-
-/* https://jsbin.com/itejak/1/edit?html,css,output */
+/* Inputs stay focusable for keyboard users; their labels draw the control */
 input[type="checkbox"], input[type="radio"] {
-  display: none;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 1px;
 }
 
-input[type="checkbox"] + label:before {
+input[type="checkbox"] + label:before,
+input[type="radio"] + label:before {
   background: var(--checkbox-bg);
-  border: 0 solid rgba(0,0,0,0.20);
-  border-radius: 3px;
   box-shadow: var(--checkbox-shadow);
+  box-sizing: border-box;
+  color: var(--accent-text);
   content: "\00a0";
   display: inline-block;
-  font: 13px sans-serif;
+  font: 600 11px/14px var(--font-system);
   height: 14px;
-  line-height: 16px;
-  margin: 0 4px 0 0;
-  padding:0;
+  margin: 0 6px 0 0;
+  text-align: center;
+  transition: background-color 120ms ease-out, box-shadow 120ms ease-out;
+  vertical-align: -2px;
   width: 14px;
 }
 
-body[dir=rtl] input[type="checkbox"] + label:before {
-  margin: 0 0 0 4px;
+input[type="checkbox"] + label:before {
+  border-radius: 4px;
 }
 
-.darwin input[type="checkbox"] + label:before {
-  font: 12px sans-serif;
+input[type="radio"] + label:before {
+  border-radius: 50%;
 }
 
-.win32 input[type="checkbox"] + label:before {
-  font: 11px sans-serif;
+body[dir=rtl] input[type="checkbox"] + label:before,
+body[dir=rtl] input[type="radio"] + label:before {
+  margin: 0 0 0 6px;
 }
 
 input[type="checkbox"]:checked + label:before {
   background: var(--checkbox-checked-bg);
-  color: #FFFFFF;
-  content: "\2714";
-  text-align: center;
-}
-
-.win32 input[type="checkbox"]:checked + label:before {
+  box-shadow: none;
   content: "\2713";
 }
 
-input[type="radio"] + label:before {
-  background: var(--checkbox-bg);
-  border: 0 solid rgba(0,0,0,0.20);
-  border-radius: 13px;
-  box-shadow: var(--checkbox-shadow);
-  content: "\00a0";
-  display: inline-block;
-  font: 13px sans-serif;
-  height: 16px;
-  margin: 0 4px 0 0;
-  padding:0;
-  width: 16px;
-}
-
-body[dir=rtl] input[type="radio"] + label:before {
-  margin: 0 0 0 4px;
-}
-
 input[type="radio"]:checked + label:before {
-  background: var(--checkbox-checked-bg);
-  color: #FFFFFF;
-  content: "\25CF";
-  text-align: center;
+  background: var(--accent-text);
+  box-shadow: inset 0 0 0 4px var(--checkbox-checked-bg);
 }
 
+input[type="checkbox"]:focus-visible + label:before,
+input[type="radio"]:focus-visible + label:before {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+input[type="checkbox"]:disabled + label,
 input[type="radio"]:disabled + label {
-  color: rgba(255,255,255,0.99);
+  opacity: 0.5;
 }
 
 input[type="range"] {
+  accent-color: var(--accent);
   margin: 0 16px 0 13px;
   vertical-align: middle;
   width: 200px;
@@ -313,7 +294,6 @@ body[dir=rtl] input[type="range"] {
   margin: 0 13px 0 16px;
 }
 
-/* https://developer.mozilla.org/en-US/docs/Learn/Forms/Advanced_form_styling#Selects_and_datalists */
 .has-select {
   display: inline-block;
   margin-left: 4px;
@@ -327,71 +307,77 @@ body[dir=rtl] .has-select {
 }
 
 .has-select::after {
-  color: #FFFFFF;
-  content: "⌄";
+  color: var(--accent-text);
+  content: "\2304";
+  font: 600 10px/1 var(--font-system);
   pointer-events: none;
   position: absolute;
-  right: 3px;
+  right: 6px;
+  top: 3px;
 }
 
 body[dir=rtl] .has-select::after {
-  left: 3px;
+  left: 6px;
   right: auto;
 }
 
 .has-select::before {
   background: var(--has-select-before-bg);
-  border-radius: 0 3px 3px 0;
+  border-radius: 4px;
   content: "";
-  height: 19px;
+  height: 16px;
   pointer-events: none;
   position: absolute;
-  right: 0;
-  width: 16.5px;
+  right: 2px;
+  top: 2px;
+  width: 16px;
 }
 
 body[dir=rtl] .has-select::before {
-  left: 0;
+  left: 2px;
   right: auto;
 }
 
 select {
   appearance: none;
   -webkit-appearance: none;
-  color: var(--select-color);
   background: var(--select-bg);
   border: var(--select-border);
-  border-radius: 3px 0 0 3px;
+  border-radius: 6px;
   box-shadow: var(--select-shadow);
-  font-family: sans-serif;
-  height: 19px;
-  padding-left: 8px;
+  color: var(--select-color);
+  font: 13px var(--font-system);
+  height: 20px;
+  padding: 0 24px 0 8px;
   width: 100%;
 }
 
 body[dir=rtl] select {
-  padding-left: 0;
-  padding-right: 8px;
+  padding: 0 8px 0 24px;
 }
 
 select option {
+  background: var(--select-option-bg);
   color: var(--select-color);
-  background: var(--select-option-bg) ;
 }
 
 select:focus {
   outline: none;
 }
 
+select:focus-visible {
+  outline: 3px solid var(--focus-ring);
+}
+
 button {
   background: var(--button-bg-color);
-  border: 0 solid rgba(0,0,0,0.15);
-  border-radius: 3px;
+  border: 0;
+  border-radius: 6px;
   box-shadow: var(--button-shadow);
   color: var(--button-color);
-  font-size: 13px;
-  letter-spacing: -0.08px;
-  padding: 2px 12.5px;
+  font: 13px/20px var(--font-system);
+  min-height: 22px;
+  padding: 1px 14px;
   text-align: center;
 }
 
@@ -399,26 +385,35 @@ button:focus {
   outline: none;
 }
 
-button:hover {
-  cursor: pointer;
+button:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 1px;
 }
 
 button:active {
-  background-image: linear-gradient(180deg, #84bffb 0%, #1a88ff 100%);
-  border-radius: 3.5px;
-  box-shadow: 0 0 0 0 rgba(0,0,0,0.15);
-  color: #FFFFFF;
+  background: var(--button-active-bg-color);
 }
 
 .push {
   background: var(--button-push-bg);
-  border-radius: 3.5px;
   box-shadow: var(--button-push-shadow);
-  color: #FFFFFF;
+  color: var(--accent-text);
+}
+
+.push:active {
+  background: var(--button-push-bg);
+  filter: brightness(0.9);
 }
 
 hr {
   background: var(--hr-bg-color);
-  border: 0 solid rgba(0,0,0,0.20);
-  height: 2px;
+  border: 0;
+  height: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
