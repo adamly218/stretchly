@@ -58,6 +58,12 @@
     },
     "mac": {
       "category": "public.app-category.healthcare-fitness",
+      "extraResources": [
+        {
+          "from": "native/camera-in-use/camera-in-use",
+          "to": "camera-in-use"
+        }
+      ],
       "identity": "-",
       "target": [
         {

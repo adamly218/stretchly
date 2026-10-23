@@ -49,6 +49,7 @@ export default {
   silentNotifications: false,
   monitorDnd: true,
   monitorDndCheckInterval: 2000,
+  cameraInUseAsDnd: false,
   miniBreakStartSound: 'silence',
   longBreakStartSound: 'silence',
   themeSource: 'system',

@@ -1691,6 +1691,9 @@ ipcMain.on('save-setting', function (event, key, value) {
   if (key === 'monitorDnd') {
     breakPlanner.doNotDisturb(value)
   }
+  if (key === 'cameraInUseAsDnd') {
+    breakPlanner.cameraInUse(value)
+  }
 
   if (key === 'language') {
     i18next.changeLanguage(value)

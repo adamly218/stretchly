@@ -234,7 +234,7 @@ class BreaksPlanner extends EventEmitter {
     if (this.pollersSuspended) {
       this.pollersSuspended = false
       if (this.settings.get('naturalBreaks')) this.naturalBreaksManager.start()
-      if (this.settings.get('monitorDnd')) this.dndManager.start()
+      this.dndManager.configure(this.settings.get('monitorDnd'), this.settings.get('cameraInUseAsDnd'))
       this.appExclusionsManager.reinitialize(this.settings)
     }
   }
@@ -272,10 +272,19 @@ class BreaksPlanner extends EventEmitter {
   }
 
   doNotDisturb (shouldUse) {
-    if (shouldUse) {
-      this.dndManager.start()
-    } else {
-      this.dndManager.stop()
+    this.dndManager.configure(shouldUse, this.settings.get('cameraInUseAsDnd'))
+    if (!shouldUse) {
+      this.dndManager.isOnDnd = false
+      if (!this.isPaused && this.scheduler.reference === null) {
+        this.reset()
+      }
+    }
+  }
+
+  cameraInUse (shouldUse) {
+    this.dndManager.configure(this.settings.get('monitorDnd'), shouldUse)
+    if (!shouldUse) {
+      this.dndManager.isOnDnd = false
       if (!this.isPaused && this.scheduler.reference === null) {
         this.reset()
       }

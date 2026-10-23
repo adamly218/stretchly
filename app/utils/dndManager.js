@@ -2,17 +2,20 @@ import EventEmitter from 'events'
 import log from 'electron-log/main.js'
 import { getFocusAssist } from 'windows-focus-assist'
 import dbus from '@particle/dbus-next'
-import { exec } from 'node:child_process'
+import { exec, execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { readFile } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { isAbsolute, join } from 'node:path'
+import { dirname, isAbsolute, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 class DndManager extends EventEmitter {
   constructor (settings) {
     super()
     this.settings = settings
     this.monitorDnd = settings.get('monitorDnd')
+    this.monitorCamera = settings.get('cameraInUseAsDnd')
     this.monitorDndCheckInterval = settings.get('monitorDndCheckInterval')
     this.timer = null
     this.isOnDnd = false
@@ -20,14 +23,28 @@ class DndManager extends EventEmitter {
     this._unsupDEErrorShown = false
     this._errorLogged = {}
 
-    if (this.monitorDnd) {
-      this.start()
+    if (this.monitorDnd || this.monitorCamera) {
+      this._startTimer()
     }
   }
 
   start () {
-    if (this.timer) return
     this.monitorDnd = true
+    this._startTimer()
+  }
+
+  configure (monitorDnd, monitorCamera) {
+    this.monitorDnd = monitorDnd
+    this.monitorCamera = monitorCamera
+    if (monitorDnd || monitorCamera) {
+      this._startTimer()
+    } else {
+      this.stop()
+    }
+  }
+
+  _startTimer () {
+    if (this.timer) return
     this._checkDnd()
     log.info('Stretchly: starting Do Not Disturb monitoring')
     if (process.platform === 'linux') {
@@ -143,6 +160,9 @@ class DndManager extends EventEmitter {
 
   async _doNotDisturb () {
     // TODO also check for session state? https://github.com/felixrieseberg/electron-notification-state/tree/master#session-state
+    if (process.platform === 'darwin' && this.monitorCamera && await this._isCameraInUse()) {
+      return true
+    }
     if (this.monitorDnd) {
       if (process.platform === 'win32') {
         let wfa = 0
@@ -174,6 +194,24 @@ class DndManager extends EventEmitter {
         return await this._isDndEnabledLinux()
       }
     } else {
+      return false
+    }
+  }
+
+  get _cameraHelperPath () {
+    const bundled = process.resourcesPath && join(process.resourcesPath, 'camera-in-use')
+    if (bundled && existsSync(bundled)) {
+      return bundled
+    }
+    return join(dirname(fileURLToPath(import.meta.url)), '../../native/camera-in-use/camera-in-use')
+  }
+
+  async _isCameraInUse () {
+    try {
+      const { stdout } = await promisify(execFile)(this._cameraHelperPath)
+      return stdout.trim() === '1'
+    } catch (e) {
+      this._logErrorOnce('camera', e)
       return false
     }
   }

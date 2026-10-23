@@ -155,6 +155,8 @@ Clicking the *Stretchly* icon in your tray area will display the current status 
 
 *Stretchly* is also monitoring Do Not Disturb mode, so breaks are paused when DnD mode is On.
 
+On macOS, *Stretchly* can also pause breaks while any app is using a camera, for example during a video call. Turn on *Pause breaks while a camera is in use* in Preferences. It works independently of *Show breaks even in Do Not Disturb mode*, and a paused break shows as Do Not Disturb.
+
 *Stretchly* follows the theme of your system and is also available in dark mode.
 
 <img src="dark.png" height="340">
@@ -223,6 +225,7 @@ Here are the preferences editable via the app. If values in the app does not sui
 - `trayIconStyle` - icon style for menubar: default, time to break, or progress to break
 - `silentNotifications` - enable sounds
 - `monitorDnd` - monitor DND mode
+- `cameraInUseAsDnd` - pause breaks while a camera is in use (macOS)
 - `checkNewVersion` - check for new versions
 
 #### Editing break ideas

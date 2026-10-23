@@ -122,6 +122,40 @@ describe('dndManager', function () {
     resolve()
   }))
 
+  it('keeps monitoring for the camera when Do Not Disturb monitoring is off', () => {
+    settings.set('monitorDnd', false)
+    settings.set('cameraInUseAsDnd', true)
+    dndManager.stop()
+    dndManager = new DndManager(settings)
+    dndManager.monitorDnd.should.be.equal(false)
+    dndManager.timer.should.not.be.equal(null)
+    dndManager.configure(false, false)
+    const timerCleared = dndManager.timer === null
+    timerCleared.should.be.equal(true)
+  })
+
+  it.runIf(process.platform === 'darwin')('treats a camera in use as Do Not Disturb when cameraInUseAsDnd is on', async () => {
+    dndManager.configure(false, true)
+    dndManager._isCameraInUse = async () => true
+    const doNotDisturb = await dndManager._doNotDisturb()
+    doNotDisturb.should.be.equal(true)
+  })
+
+  it.runIf(process.platform === 'darwin')('does not check the camera when cameraInUseAsDnd is off', async () => {
+    dndManager.configure(true, false)
+    let cameraChecked = false
+    dndManager._isCameraInUse = async () => { cameraChecked = true; return true }
+    vi.stubGlobal('process', { ...process, getSystemVersion: () => '26.0' })
+    await dndManager._doNotDisturb()
+    vi.unstubAllGlobals()
+    cameraChecked.should.be.equal(false)
+  })
+
+  it.runIf(process.platform === 'darwin')('reads the real camera state from the helper', async () => {
+    const cameraInUse = await dndManager._isCameraInUse()
+    cameraInUse.should.be.a('boolean')
+  })
+
   afterEach(async () => {
     dndManager.stop()
     dndManager = null

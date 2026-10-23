@@ -49,6 +49,7 @@
       "allScreens": "Shows breaks on all monitors",
       "monitorIdleTime": "Monitor system idle time (breaks are paused if system is idle).",
       "monitorDnd": "Show breaks even in Do Not Disturb mode",
+      "cameraInUseAsDnd": "Pause breaks while a camera is in use",
       "language": "Select language:",
       "restoreDefaults": "Restore defaults"
     },

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `currentTimeInBreaksFormat` advanced preference to set the format of current time in breaks, e.g. to show date and weekday
 - `currentTimeInBreaksFontSize` advanced preference to change the clock's font size in breaks
 - CLI command and shortcut to start the last break again
+- macOS: option to pause breaks while a camera is in use, e.g. during video calls (#969)
 
 ### Changed
 - refreshed design closer to native macOS: system font, modern controls, translucent Preferences toolbar
