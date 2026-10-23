@@ -1,26 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
-    <title>• Logo Stretchly / Generic / Dark Aqua</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <polygon id="path-1" points="0 0 57.3333333 0 57.3333333 64 0 64"></polygon>
-    </defs>
-    <g id="•-Logo-Stretchly-/-Generic-/-Dark-Aqua" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g>
-            <rect id="posn" x="0" y="0" width="64" height="64"></rect>
-            <g id="logo-stretchly-01" transform="translate(3.000000, 0.000000)">
-                <g id="Clipped">
-                    <mask id="mask-2" fill="white">
-                        <use xlink:href="#path-1"></use>
-                    </mask>
-                    <g id="Path"></g>
-                    <g id="Group" mask="url(#mask-2)" fill-rule="nonzero">
-                        <path d="M43.054,46.1053333 C43.054,26.3393333 24,30.2126667 24,19.676 C24,15.292 25.6293333,10.6666667 33.3773333,10.6666667 C46.474,10.6666667 57.3333333,22.8153333 57.3333333,37.4673333 C57.3333333,52.1206667 46.566,64 33.47,64 C39.2533333,60.6473333 43.054,53.892 43.054,46.1053333" id="Path" fill="#797979"></path>
-                        <path d="M23.8626667,0 C18.0793333,3.352 14.2793333,10.1073333 14.2793333,17.896 C14.2793333,37.662 33.3333333,33.786 33.3333333,44.3226667 C33.3333333,48.7086667 31.7033333,53.3333333 23.954,53.3333333 C10.8586667,53.3333333 0,41.1833333 0,26.532 C0,11.88 10.7666667,0 23.8626667,0" id="Path" fill="#CC0000"></path>
-                    </g>
-                </g>
-            </g>
-        </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A9D90"/>
+      <stop offset="1" stop-color="#1C4A4B"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="186" fill="url(#bg)" filter="url(#shadow)"/>
+  <circle cx="512" cy="512" r="262" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="58"/>
+  <circle cx="512" cy="512" r="262" fill="none" stroke="#FFFFFF" stroke-width="58" stroke-linecap="round"
+    stroke-dasharray="1300 1646" transform="rotate(-90 512 512)"/>
+  <g transform="translate(0 14)">
+    <g fill="none" stroke="#FFFFFF" stroke-width="46" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M392 336 L512 478 L632 336"/>
+      <path d="M512 478 V566"/>
+      <path d="M466 662 L512 566 L558 662"/>
     </g>
+    <circle cx="512" cy="390" r="38" fill="#FFFFFF"/>
+  </g>
 </svg>

@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - breaks show a countdown ring with a slow breathing glow and glass-style buttons
 - dark text on the light Coffee Kisses break colour for readable contrast
 - Preferences window no longer offers minimize or zoom
+- new app icon, logo and tray icons: a stretching figure inside a countdown ring
 
 ### Fixed
 - checkboxes, radio buttons and break buttons can be used with the keyboard and show a focus ring
