@@ -266,6 +266,12 @@ app.on('before-quit', (event) => {
     if (autostartManager) {
       autostartManager.disconnect()
     }
+    if (microbreakWins) {
+      microbreakWins = closeWindows(microbreakWins)
+    }
+    if (breakWins) {
+      breakWins = closeWindows(breakWins)
+    }
     if (processWin && !processWin.isDestroyed()) {
       processWin.destroy()
       processWin = null
@@ -648,6 +654,12 @@ function windowIconPath () {
   return join(__dirname, '/images/app-icons', windowIconFileName)
 }
 
+function sendToProcessWin (channel, ...args) {
+  if (processWin && !processWin.isDestroyed()) {
+    processWin.webContents.send(channel, ...args)
+  }
+}
+
 function startProcessWin () {
   if (processWin) {
     planVersionCheck()
@@ -772,7 +784,7 @@ function planVersionCheck (seconds = 1) {
 function checkVersion () {
   if (settings.get('disableAppUpdateFeatures')) return
   if (settings.get('checkNewVersion')) {
-    processWin.webContents.send('check-version',
+    sendToProcessWin('check-version',
       `v${app.getVersion()}`,
       settings.get('notifyNewVersion'),
       settings.get('silentNotifications')
@@ -836,7 +848,7 @@ function startMicrobreak () {
   if (!settings.get('silentNotifications')) {
     const sound = settings.get('miniBreakStartSound')
     if (sound !== 'silence') {
-      processWin.webContents.send('play-sound', sound, settings.get('volume'))
+      sendToProcessWin('play-sound', sound, settings.get('volume'))
     }
   }
 
@@ -1006,7 +1018,7 @@ function startBreak () {
   if (!settings.get('silentNotifications')) {
     const sound = settings.get('longBreakStartSound')
     if (sound !== 'silence') {
-      processWin.webContents.send('play-sound', sound, settings.get('volume'))
+      sendToProcessWin('play-sound', sound, settings.get('volume'))
     }
   }
 
@@ -1158,7 +1170,7 @@ function breakComplete (shouldPlaySound, windows, breakType) {
   }
   if (shouldPlaySound && !settings.get('silentNotifications')) {
     const audio = breakType === 'mini' ? 'miniBreakAudio' : 'longBreakAudio'
-    processWin.webContents.send('play-sound', settings.get(audio), settings.get('volume'))
+    sendToProcessWin('play-sound', settings.get(audio), settings.get('volume'))
   }
   if (process.platform === 'darwin') {
     // get focus on the last app
@@ -1189,7 +1201,7 @@ function enterManualAwaitPhase (type, shouldPlaySound) {
   if (!settings.get(manualSettingKey)) return
   if (shouldPlaySound && !settings.get('silentNotifications')) {
     const audioKey = isMini ? 'miniBreakAudio' : 'longBreakAudio'
-    processWin.webContents.send('play-sound', settings.get(audioKey), settings.get('volume'))
+    sendToProcessWin('play-sound', settings.get(audioKey), settings.get('volume'))
   }
   const wins = isMini ? microbreakWins : breakWins
   if (wins) {
@@ -1635,7 +1647,7 @@ function updateToolTip () {
 }
 
 function showNotification (text) {
-  processWin.webContents.send('show-notification',
+  sendToProcessWin('show-notification',
     text,
     settings.get('silentNotifications')
   )
@@ -1744,7 +1756,7 @@ ipcMain.on('restore-defaults', (event) => {
 })
 
 ipcMain.on('play-sound', (event, sound) => {
-  processWin.webContents.send('play-sound', sound, settings.get('volume'))
+  sendToProcessWin('play-sound', sound, settings.get('volume'))
 })
 
 ipcMain.handle('show-debug', (event) => {

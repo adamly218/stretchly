@@ -29,7 +29,6 @@ window.onload = async (e) => {
 
   new HtmlTranslate(document).translate()
   setWindowHeight()
-  setTimeout(() => { eventsAttached = true }, 500)
 
   if (settings.customPreferencesMessage) {
     const customMessageDiv = document.createElement('div')
@@ -228,9 +227,6 @@ window.onload = async (e) => {
     const output = range.closest('div').querySelector('output')
     range.value = settings[range.name] / divisor
     const unit = output.dataset.unit
-    output.innerHTML = await window.utils.formatUnitAndValue(unit, range.value)
-    document.querySelector('#longBreakEvery').closest('div').querySelector('output')
-      .innerHTML = await window.i18next.t('utils.minutes', { count: parseInt(realBreakInterval()) })
     if (!eventsAttached) {
       range.onchange = async event => {
         output.innerHTML = await window.utils.formatUnitAndValue(unit, range.value)
@@ -244,6 +240,9 @@ window.onload = async (e) => {
           .innerHTML = await window.i18next.t('utils.minutes', { count: parseInt(realBreakInterval()) })
       }
     }
+    output.innerHTML = await window.utils.formatUnitAndValue(unit, range.value)
+    document.querySelector('#longBreakEvery').closest('div').querySelector('output')
+      .innerHTML = await window.i18next.t('utils.minutes', { count: parseInt(realBreakInterval()) })
   })
 
   document.querySelectorAll('.sounds img').forEach(preview => {
@@ -301,6 +300,7 @@ window.onload = async (e) => {
       window.stretchly.openContributorAuth(button.dataset.provider)
     }
   })
+  eventsAttached = true
 
   document.querySelector('.version').innerHTML = await window.stretchly.getVersion()
   if (!settings.disableAppUpdateFeatures) {

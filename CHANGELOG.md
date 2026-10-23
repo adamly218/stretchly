@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - checkboxes, radio buttons and break buttons can be used with the keyboard and show a focus ring
+- crash ("An error occurred while running Stretchly") when a break ends while Stretchly is quitting, and quitting during a break no longer gets stuck
+- Preferences sometimes ignoring all changes (sliders not updating or saving) when Stretchly was slow to respond while opening
 - fix debug file and folder links when paths contain HTML special characters
 - fix custom break images when the user data path contains URL special characters
 - fix snap startup crash
